@@ -10,7 +10,6 @@
         return response;
     }
 
-
     // obtem todos as empresas
     this.getEmpresas = function () {
         var response = $http({
@@ -41,7 +40,6 @@
         });
         return response;
     }
-
 
     // obtem todos os funcionarios
     this.getFuncionarios = function () {
@@ -91,7 +89,6 @@
         });
         return response;
     }
-
 
     // obtem todos os relatorios
     this.getRelatorios = function () {

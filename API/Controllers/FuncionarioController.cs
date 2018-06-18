@@ -64,7 +64,7 @@ namespace API.Controllers
                 var result = unitOfWork.FuncionarioRepository.SelectByParam(filter: a => a.CPF == funcionario.CPF);
 
                 if (result != null)
-                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                    return Request.CreateResponse(HttpStatusCode.Conflict);
 
                 unitOfWork.FuncionarioRepository.Insert(funcionario);
                 unitOfWork.Commit();

@@ -5,17 +5,17 @@
             <div class="form-group" ng-class="{ 'has-error': Cadastro.nome.$dirty && Cadastro.nome.$error.required }">
                 <label for="nome">Nome</label>
                 <input type="text" name="nome" id="nome" class="form-control" ng-model="Funcionario.Nome" maxlength="100" required />
-                <span class="text-danger" ng-show="Cadastro.nome.$touched && Cadastro.nome.$invalid">Este campo é obrigatorio.</span>
+                <span class="text-danger" ng-show="Cadastro.nome.$dirty && Cadastro.nome.$error.required">Este campo é obrigatorio.</span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Cadastro.cpf.$dirty && Cadastro.cpf.$error.required }">
                 <label for="cpf">CPF</label>
                 <input type="text" name="cpf" id="cpf" class="form-control" ng-model="Funcionario.CPF" maxlength="11" required />
-                <span class="text-danger" ng-show="Cadastro.cpf.$touched && Cadastro.cpf.$invalid">Este campo é obrigatorio.</span>
+                <span class="text-danger" ng-show="Cadastro.cpf.$dirty && Cadastro.cpf.$error.required">Este campo é obrigatorio.</span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Cadastro.rg.$dirty && Cadastro.rg.$error.required }">
                 <label for="rg">RG</label>
                 <input type="text" name="rg" id="rg" class="form-control" ng-model="Funcionario.RG" maxlength="10" required />
-                <span class="text-danger" ng-show="Cadastro.rg.$touched && Cadastro.rg.$invalid">Este campo é obrigatorio.</span>
+                <span class="text-danger" ng-show="Cadastro.rg.$dirty && Cadastro.rg.$error.required">Este campo é obrigatorio.</span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Cadastro.telefone.$dirty && Cadastro.telefone.$error.required }">
                 <label for="telefone">Telefone</label>
@@ -24,7 +24,7 @@
             <div class="form-group" ng-class="{ 'has-error': Cadastro.cargo.$dirty && Cadastro.cargo.$error.required }">
                 <label for="cargo">Cargo</label>
                 <input type="text" name="cargo" id="cargo" class="form-control" ng-model="Funcionario.Cargo" maxlength="50" required />
-                <span class="text-danger" ng-show="Cadastro.cargo.$touched && Cadastro.cargo.$invalid">Este campo é obrigatorio.</span>
+                <span class="text-danger" ng-show="Cadastro.cargo.$dirty && Cadastro.cargo.$error.required">Este campo é obrigatorio.</span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Cadastro.status.$dirty && Cadastro.status.$error.required }">
                 <label for="status">Status</label>
@@ -32,7 +32,7 @@
                     <option value="Ativo">Ativo</option>
                     <option value="Inativo">Inativo</option>
                 </select>
-                <span class="text-danger" ng-show="Cadastro.status.$touched && Cadastro.status.$invalid">Selecione uma opção.</span>
+                <span class="text-danger" ng-show="Cadastro.status.$dirty && Cadastro.status.$error.required">Selecione uma opção.</span>
             </div>
         </form>
         <br />

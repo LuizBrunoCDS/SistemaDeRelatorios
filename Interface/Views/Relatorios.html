@@ -6,7 +6,7 @@
             <select required name="funcionario" ng-model="Parametro.IdFuncionario" class="form-control">
                 <option ng-repeat="func in lstFuncionarios" value="{{func.IdFuncionario}}">{{func.Nome}}</option>
             </select>
-            <span class="text-danger" ng-show="RelatorioFunc.funcionario.$touched && RelatorioFunc.funcionario.$invalid">Selecione uma opção.</span>
+            <span class="text-danger" ng-show="RelatorioFunc.funcionario.$dirty && RelatorioFunc.funcionario.$error.required">Selecione uma opção.</span>
         </div>
         <input type="button" class="btn btn-default" value="Buscar" ng-click="relatorioPorFuncionario()" ng-disabled="RelatorioFunc.$invalid" />
     </form>
@@ -18,7 +18,7 @@
             <select required name="empresa" ng-model="Parametro.IdEmpresa" class="form-control">
                 <option ng-repeat="emp in lstEmpresas" value="{{emp.IdEmpresa}}">{{emp.Nome}} - {{emp.Local}}</option>
             </select>
-            <span class="text-danger" ng-show="RelatorioEmp.empresa.$touched && RelatorioEmp.empresa.$invalid">Selecione uma opção.</span>
+            <span class="text-danger" ng-show="RelatorioEmp.empresa.$dirty && RelatorioEmp.empresa.$error.required">Selecione uma opção.</span>
         </div>
         <input type="button" class="btn btn-default" value="Buscar" ng-click="relatorioPorEmpresa()" ng-disabled="RelatorioEmp.$invalid" />
     </form>
@@ -30,14 +30,14 @@
             <select required name="mes" ng-model="Parametro.Mes" class="form-control">
                 <option ng-repeat="mes in Meses" value="{{$index+1}}">{{mes}}</option>
             </select>
-            <span class="text-danger" ng-show="RelatorioMesAno.mes.$touched && RelatorioMesAno.mes.$invalid">Selecione uma opção.</span>
+            <span class="text-danger" ng-show="RelatorioMesAno.mes.$dirty && RelatorioMesAno.mes.$error.required">Selecione uma opção.</span>
         </div>
         <div class="form-group" ng-class="{ 'has-error': RelatorioMesAno.ano.$dirty && RelatorioMesAno.ano.$error.required }">
             <label for="ano">Ano</label>
             <select required name="ano" ng-model="Parametro.Ano" class="form-control">
                 <option ng-repeat="ano in Anos" value="{{ano}}">{{ano}}</option>
             </select>
-            <span class="text-danger" ng-show="RelatorioMesAno.ano.$touched && RelatorioMesAno.ano.$invalid">Selecione uma opção.</span>
+            <span class="text-danger" ng-show="RelatorioMesAno.ano.$dirty && RelatorioMesAno.ano.$error.required">Selecione uma opção.</span>
         </div>
         <input type="button" class="btn btn-default" value="Buscar" ng-click="relatorioPorMesAno()" ng-disabled="RelatorioMesAno.$invalid" />
     </form>
@@ -49,7 +49,7 @@
             <select required name="ano" ng-model="Parametro.PorAno" class="form-control">
                 <option ng-repeat="ano in Anos" value="{{ano}}">{{ano}}</option>
             </select>
-            <span class="text-danger" ng-show="RelatorioAno.ano.$touched && RelatorioAno.ano.$invalid">Selecione uma opção.</span>
+            <span class="text-danger" ng-show="RelatorioAno.ano.$dirty && RelatorioAno.ano.$error.required">Selecione uma opção.</span>
         </div>
         <input type="button" class="btn btn-default" value="Buscar" ng-click="relatorioPorAno()" ng-disabled="RelatorioAno.$invalid" />
     </form>

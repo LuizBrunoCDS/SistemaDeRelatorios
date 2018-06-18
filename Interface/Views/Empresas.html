@@ -5,12 +5,12 @@
             <div class="form-group" ng-class="{ 'has-error': Cadastro.nome.$dirty && Cadastro.nome.$error.required }">
                 <label for="nome">Nome</label>
                 <input type="text" name="nome" id="nome" class="form-control" ng-model="Empresa.Nome" maxlength="100" required />
-                <span class="text-danger" ng-show="Cadastro.nome.$touched && Cadastro.nome.$invalid">Este campo é obrigatorio.</span>
+                <span class="text-danger" ng-show="Cadastro.nome.$dirty && Cadastro.nome.$error.required">Este campo é obrigatorio.</span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Cadastro.local.$dirty && Cadastro.local.$error.required }">
                 <label for="local">Local</label>
                 <input type="text" name="local" id="local" class="form-control" ng-model="Empresa.Local" maxlength="100" required />
-                <span class="text-danger" ng-show="Cadastro.local.$touched && Cadastro.local.$invalid">Este campo é obrigatorio.</span>
+                <span class="text-danger" ng-show="Cadastro.local.$dirty && Cadastro.local.$error.required">Este campo é obrigatorio.</span>
             </div>
         </form>
         <br />

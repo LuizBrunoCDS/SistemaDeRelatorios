@@ -39,7 +39,7 @@ namespace API.Controllers
                 var result = unitOfWork.EmpresaRepository.SelectByParam(filter: a => a.Nome == empresa.Nome && a.Local == empresa.Local);
 
                 if (result != null)
-                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                    return Request.CreateResponse(HttpStatusCode.Conflict);
 
                 unitOfWork.EmpresaRepository.Insert(empresa);
                 unitOfWork.Commit();

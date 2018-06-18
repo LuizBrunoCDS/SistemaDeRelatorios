@@ -33,8 +33,11 @@ namespace Infra.Repositories
         {
             IQueryable<T> query = dbSet;
             if (includeProperties != "")
+            {
                 foreach (var include in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                     query = query.Include(include);
+            }
+
             if (filter != null)
                 query = query.Where(filter);
             if (orderBy != null)
@@ -46,8 +49,11 @@ namespace Infra.Repositories
         public T SelectByParam(Expression<Func<T, bool>> filter = null, string includeProperties = "")
         {
             IQueryable<T> query = dbSet;
-            foreach (var include in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                query = query.Include(include);
+            if (includeProperties != "")
+            {
+                foreach (var include in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                    query = query.Include(include);
+            }
             return query.FirstOrDefault(filter);
         }
 

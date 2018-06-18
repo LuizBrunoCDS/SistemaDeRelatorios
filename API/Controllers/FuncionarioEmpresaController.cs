@@ -88,7 +88,7 @@ namespace API.Controllers
                 var result = unitOfWork.FuncionarioEmpresaRepository.SelectByParam(filter: a => a.IdFuncionario == funcionarioEmpresa.IdFuncionario && a.IdEmpresa == funcionarioEmpresa.IdEmpresa && a.Data == funcionarioEmpresa.Data);
 
                 if (result == null)
-                    return Request.CreateResponse(HttpStatusCode.NoContent);
+                    return Request.CreateResponse(HttpStatusCode.Conflict);
 
                 unitOfWork.FuncionarioEmpresaRepository.Insert(funcionarioEmpresa);
                 unitOfWork.Commit();
