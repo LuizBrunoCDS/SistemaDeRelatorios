@@ -1,0 +1,68 @@
+﻿<div>
+    <br /><br /><p><b>Cadastro de relatorio</b></p><br />
+    <div id="formCadastro">
+        <form name="Cadastro">
+            <div class="form-group" ng-class="{ 'has-error': Cadastro.funcionario.$dirty && Cadastro.funcionario.$error.required }">
+                <label for="nome">Funcionario</label>
+                <select required name="funcionario" id="funcionario" ng-model="FuncionarioEmpresa.IdFuncionario" class="form-control"
+                        ng-options="func.IdFuncionario as func.Nome for func in lstFuncionarios"></select>
+                <span class="text-danger" ng-show="Cadastro.funcionario.$touched && Cadastro.funcionario.$invalid">Selecione uma opção.</span>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': Cadastro.empresa.$dirty && Cadastro.empresa.$error.required }">
+                <label for="empresa">Empresa</label>
+                <select required name="empresa" id="empresa" ng-model="FuncionarioEmpresa.IdEmpresa" class="form-control"
+                        ng-options="emp.IdEmpresa as emp.Nome + ' - ' + emp.Local for emp in lstEmpresas"></select>
+                <span class="text-danger" ng-show="Cadastro.empresa.$touched && Cadastro.empresa.$invalid">Selecione uma opção.</span>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': Cadastro.data.$dirty && Cadastro.data.$error.required }">
+                <label for="data">Data</label>
+                <input type="date" name="data" id="data" class="form-control" ng-model="FuncionarioEmpresa.Data" required />
+                <span class="text-danger" ng-show="Cadastro.data.$touched && Cadastro.data.$invalid">Este campo é obrigatorio.</span>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': Cadastro.horarioinicio.$dirty && Cadastro.horarioinicio.$error.required }">
+                <label for="horarioinicio">Horario Inicio</label>
+                <input type="text" name="horarioinicio" id="horarioinicio" class="form-control" ng-model="FuncionarioEmpresa.HorarioInicio" maxlength="5" required />
+                <span class="text-danger" ng-show="Cadastro.horarioinicio.$touched && Cadastro.horarioinicio.$invalid">Este campo é obrigatorio.</span>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': Cadastro.horariotermino.$dirty && Cadastro.horariotermino.$error.required }">
+                <label for="horariotermino">Horario Termino</label>
+                <input type="text" name="horariotermino" id="horariotermino" class="form-control" ng-model="FuncionarioEmpresa.HorarioTermino" maxlength="5" required />
+                <span class="text-danger" ng-show="Cadastro.horariotermino.$touched && Cadastro.horariotermino.$invalid">Este campo é obrigatorio.</span>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': Cadastro.observacao.$dirty && Cadastro.observacao.$error.required }">
+                <label for="observacao">Observacao</label>
+                <input type="text" name="observacao" id="observacao" class="form-control" ng-model="FuncionarioEmpresa.Observacao" maxlength="100" />
+            </div>
+        </form>
+        <br />
+        <input type="button" class="btn btn-default" value="Salvar" ng-click="adicionarRelatorio()" ng-disabled="Cadastro.$invalid" />
+        <input type="button" class="btn btn-danger" value="Cancelar" ng-click="window.location.reload()" />
+    </div>
+
+    <div ng-if="listaDeRelatorios" class="table-responsive">
+        <br /><p><b>Lista de relatorios</b></p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td><b>Nome</b></td>
+                    <td><b>Empresa</b></td>
+                    <td><b>Data</b></td>
+                    <td><b>Inicio</b></td>
+                    <td><b>Termino</b></td>
+                    <td><b>Opções</b></td>
+                </tr>
+            </thead>
+            <tr ng-repeat="relatorio in lstRelatorios">
+                <td>{{relatorio.funcionario.Nome}}</td>
+                <td>{{relatorio.empresa.Nome}} - {{relatorio.empresa.Local}}</td>
+                <td>{{relatorio.Data | date : 'dd/MM/yyyy'}}</td>
+                <td>{{relatorio.HorarioInicio}}</td>
+                <td>{{relatorio.HorarioTermino}}</td>
+                <td>
+                    <button type="button" id="select" ng-click="visualizarRelatorio(relatorio, 'update')" class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
+                    <button type="button" id="select" ng-click="removerRelatorio(relatorio)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

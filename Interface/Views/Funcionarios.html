@@ -1,0 +1,64 @@
+﻿<div>
+    <br /><br /><p><b>Cadastro de funcionarios</b></p><br />
+    <div id="formCadastro">
+        <form name="Cadastro">
+            <div class="form-group" ng-class="{ 'has-error': Cadastro.nome.$dirty && Cadastro.nome.$error.required }">
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" id="nome" class="form-control" ng-model="Funcionario.Nome" maxlength="100" required />
+                <span class="text-danger" ng-show="Cadastro.nome.$touched && Cadastro.nome.$invalid">Este campo é obrigatorio.</span>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': Cadastro.cpf.$dirty && Cadastro.cpf.$error.required }">
+                <label for="cpf">CPF</label>
+                <input type="text" name="cpf" id="cpf" class="form-control" ng-model="Funcionario.CPF" maxlength="11" required />
+                <span class="text-danger" ng-show="Cadastro.cpf.$touched && Cadastro.cpf.$invalid">Este campo é obrigatorio.</span>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': Cadastro.rg.$dirty && Cadastro.rg.$error.required }">
+                <label for="rg">RG</label>
+                <input type="text" name="rg" id="rg" class="form-control" ng-model="Funcionario.RG" maxlength="10" required />
+                <span class="text-danger" ng-show="Cadastro.rg.$touched && Cadastro.rg.$invalid">Este campo é obrigatorio.</span>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': Cadastro.telefone.$dirty && Cadastro.telefone.$error.required }">
+                <label for="telefone">Telefone</label>
+                <input type="text" name="telefone" id="telefone" class="form-control" ng-model="Funcionario.Telefone" maxlength="12" />
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': Cadastro.cargo.$dirty && Cadastro.cargo.$error.required }">
+                <label for="cargo">Cargo</label>
+                <input type="text" name="cargo" id="cargo" class="form-control" ng-model="Funcionario.Cargo" maxlength="50" required />
+                <span class="text-danger" ng-show="Cadastro.cargo.$touched && Cadastro.cargo.$invalid">Este campo é obrigatorio.</span>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': Cadastro.status.$dirty && Cadastro.status.$error.required }">
+                <label for="status">Status</label>
+                <select required name="status" id="status" ng-model="Funcionario.Status" class="form-control">
+                    <option value="Ativo">Ativo</option>
+                    <option value="Inativo">Inativo</option>
+                </select>
+                <span class="text-danger" ng-show="Cadastro.status.$touched && Cadastro.status.$invalid">Selecione uma opção.</span>
+            </div>
+        </form>
+        <br />
+        <input type="button" class="btn btn-default" value="Salvar" ng-click="atualizarFuncionario()" ng-disabled="Cadastro.$invalid" />
+        <input type="button" class="btn btn-danger" value="Cancelar" ng-click="window.location.reload()" />
+    </div>
+
+    <div ng-if="listaDeFuncionarios" class="table-responsive">
+        <br /><p><b>Lista de funcionarios</b></p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td><b>Nome</b></td>
+                    <td><b>Telefone</b></td>
+                    <td><b>Cargo</b></td>
+                    <td><b>Status</b></td>
+                    <td><b>Visualizar</b></td>
+                </tr>
+            </thead>
+            <tr ng-repeat="func in lstFuncionarios">
+                <td>{{func.Nome}}</td>
+                <td>{{func.Telefone}}</td>
+                <td>{{func.Cargo}}</td>
+                <td ng-class="{'color-red': func.Status === 'Inativo', 'color-green': func.Status === 'Ativo'}">{{func.Status}}</td>
+                <td><button type="button" id="select" ng-click="visualizarFuncionario($index, 'update')" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button></td>
+            </tr>
+        </table>
+    </div>
+</div>

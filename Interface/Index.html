@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html ng-app="App">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sistema de relatorio de serviços</title>
+
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/angular-route.js"></script>
+    <script src="Scripts/jquery-3.3.1.js"></script>
+    <script src="Scripts/bootstrap.js"></script>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <script src="Application/App.js"></script>
+    <script src="Application/Service.js"></script>
+    <script src="Application/Controllers.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".navbar-nav li a").click(function (event) {
+                $(".navbar-collapse").collapse('hide');
+            });
+        });
+    </script>
+</head>
+<body ng-controller="LoginCtrl">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">JL Instalações Eletricas LTDA</a>
+            </div>
+            <div ng-if="navBar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li id="home"><a href="#!/"><b>Home</b></a></li>
+                    <li id="cadastrar"><a href="#!/Funcionarios"><b>Funcionarios</b></a></li>
+                    <li id="candidatos"><a href="#!/Empresas"><b>Empresas</b></a></li>
+                    <li id="candidatos"><a href="#!/CadastroRelatorio"><b>Inserir relatorio</b></a></li>
+                    <li id="candidatos"><a href="#!/Relatorios"><b>Relatorios</b></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        <hr />
+        <div ng-if="formLogin">
+            <br />
+            <div class="col-md-6 col-md-offset-3">
+                <h2>Faça o login no sistema</h2><br />
+                <form name="form" ng-submit="loginUser()" role="form">
+                    <div class="form-group" ng-class="{ 'has-error': form.usuario.$dirty && form.usuario.$error.required }">
+                        <label for="usuario">Usuario</label>
+                        <input type="text" name="usuario" id="usuario" class="form-control" ng-model="Usuario.Login" required />
+                        <span ng-show="form.usuario.$dirty && form.usuario.$error.required" class="help-block">Digite o usuario</span>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': form.senha.$dirty && form.senha.$error.required }">
+                        <label for="senha">Senha</label>
+                        <input type="password" name="senha" id="senha" class="form-control" ng-model="Usuario.Senha" required />
+                        <span ng-show="form.senha.$dirty && form.senha.$error.required" class="help-block">Digite a senha</span>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div ng-if="logado">
+            <div ng-view></div>
+        </div>
+        <hr />
+    </div>
+</body>
+</html>
