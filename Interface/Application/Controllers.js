@@ -1,6 +1,6 @@
 ﻿app.controller('LoginCtrl', function ($scope, SistemaDeRelatorios) {
     // faz o login e armazena numa session se retornar OK/Logado
-    // TODO: nao é a melhor forma de realizar autenticação, mas é provisório  
+    // OBS: nao é a melhor forma de realizar autenticação, mas é provisório  
     $scope.Usuario = {};
     checkSession();
 
@@ -18,11 +18,11 @@
         if (window.sessionStorage.length < 1) {
             $scope.navBar = false;
             $scope.formLogin = true;
-            $scope.logado = false;
+            $scope.credentials = false;
         } else {
             $scope.navBar = true;
             $scope.formLogin = false;
-            $scope.logado = true;
+            $scope.credentials = true;
         }
     }
 });
@@ -141,6 +141,18 @@ app.controller('RelatoriosCtrl', function ($scope, SistemaDeRelatorios) {
         });
     }
 
+    // relatorio por data
+    $scope.relatorioPorData = function () {
+        var result = SistemaDeRelatorios.relatorioData($scope.Parametro.Data);
+        result.then(function (lista) {
+            $scope.lstRelatorios = lista.data;
+            $scope.listaDeRelatorios = true;
+        }, function () {
+            $scope.listaDeRelatorios = false;
+            alert('Não foi encontrado nenhum registro com o parametro passado.');
+        });
+    }
+
     // relatorio por mes/ano
     $scope.relatorioPorMesAno = function () {
         var result = SistemaDeRelatorios.relatorioMes($scope.Parametro.Mes, $scope.Parametro.Ano);
@@ -214,12 +226,7 @@ app.controller('CadastroRelatorioCtrl', function ($scope, SistemaDeRelatorios) {
 
     // deleta um relatorio de um funcionaro
     $scope.removerRelatorio = function (relatorio) {
-        var res = confirm('Deseja apagar os dados do relatorio? ' +
-            '\n Nome: ' + relatorio.funcionario.Nome + '' +
-            '\n Empresa: ' + relatorio.empresa.Nome + '' +
-            '\n Data: ' + relatorio.Data + '' +
-            '\n Inicio: ' + relatorio.HorarioInicio + '' +
-            '\n Termino: ' + relatorio.HorarioTermino + '');
+        var res = confirm('Deseja apagar os dados do relatorio?');
         if (res == true) {
             var result = SistemaDeRelatorios.deleteRelatorio(relatorio.IdFuncionarioEmpresa);
             result.then(function (msg) {

@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -20,60 +21,115 @@ namespace API.Controllers
         [HttpGet]
         public HttpResponseMessage GetAll()
         {
-            var funcionarios = unitOfWork.FuncionarioEmpresaRepository.SelectAll(orderBy: a => a.OrderBy(b => b.Data), includeProperties: "funcionario,empresa");
+            try
+            {
+                var relatorio = unitOfWork.FuncionarioEmpresaRepository.SelectAll(orderBy: a => a.OrderBy(b => b.Data), includeProperties: "funcionario,empresa");
 
-            if (!funcionarios.Any())
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                if (!relatorio.Any())
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
 
-            return Request.CreateResponse(HttpStatusCode.OK, funcionarios);
+                return Request.CreateResponse(HttpStatusCode.OK, relatorio);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
 
         [Route("FuncionarioEmpresa/GetByFuncionario/{id}")]
         [HttpGet]
         public HttpResponseMessage GetByFuncionario(int id)
         {
-            var funcionarios = unitOfWork.FuncionarioEmpresaRepository.SelectAll(filter: a => a.IdFuncionario == id, orderBy: a => a.OrderBy(b => b.Data), includeProperties: "funcionario,empresa");
+            try
+            {
+                var relatorio = unitOfWork.FuncionarioEmpresaRepository.SelectAll(filter: a => a.IdFuncionario == id, orderBy: a => a.OrderBy(b => b.Data), includeProperties: "funcionario,empresa");
 
-            if (!funcionarios.Any())
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                if (!relatorio.Any())
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
 
-            return Request.CreateResponse(HttpStatusCode.OK, funcionarios);
+                return Request.CreateResponse(HttpStatusCode.OK, relatorio);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
 
         [Route("FuncionarioEmpresa/GetByEmpresa/{id}")]
         [HttpGet]
         public HttpResponseMessage GetByEmpresa(int id)
         {
-            var funcionarios = unitOfWork.FuncionarioEmpresaRepository.SelectAll(filter: a => a.IdEmpresa == id, orderBy: a => a.OrderBy(b => b.Data), includeProperties: "funcionario,empresa");
+            try
+            {
+                var relatorio = unitOfWork.FuncionarioEmpresaRepository.SelectAll(filter: a => a.IdEmpresa == id, orderBy: a => a.OrderBy(b => b.Data), includeProperties: "funcionario,empresa");
 
-            if (!funcionarios.Any())
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                if (!relatorio.Any())
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
 
-            return Request.CreateResponse(HttpStatusCode.OK, funcionarios);
+                return Request.CreateResponse(HttpStatusCode.OK, relatorio);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [Route("FuncionarioEmpresa/GetByDate/{day}/{month}/{year}")]
+        [HttpGet]
+        public HttpResponseMessage GetByMonth(int day, int month, int year)
+        {
+            try
+            {
+                DateTime date = new DateTime(year, month, day);
+                var relatorio = unitOfWork.FuncionarioEmpresaRepository.SelectAll(filter: a => a.Data == date, orderBy: a => a.OrderBy(b => b.Data), includeProperties: "funcionario,empresa");
+
+                if (!relatorio.Any())
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+
+                return Request.CreateResponse(HttpStatusCode.OK, relatorio);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
 
         [Route("FuncionarioEmpresa/GetByMonth/{month}/{year}")]
         [HttpGet]
         public HttpResponseMessage GetByMonth(int month, int year)
         {
-            var funcionarios = unitOfWork.FuncionarioEmpresaRepository.SelectAll(filter: a => a.Data.Month == month && a.Data.Year == year, orderBy: a => a.OrderBy(b => b.Data), includeProperties: "funcionario,empresa");
+            try
+            {
+                var relatorio = unitOfWork.FuncionarioEmpresaRepository.SelectAll(filter: a => a.Data.Month == month && a.Data.Year == year, orderBy: a => a.OrderBy(b => b.Data), includeProperties: "funcionario,empresa");
 
-            if (!funcionarios.Any())
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                if (!relatorio.Any())
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
 
-            return Request.CreateResponse(HttpStatusCode.OK, funcionarios);
+                return Request.CreateResponse(HttpStatusCode.OK, relatorio);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
 
         [Route("FuncionarioEmpresa/GetByYear/{year}")]
         [HttpGet]
         public HttpResponseMessage GetByYear(int year)
         {
-            var funcionarios = unitOfWork.FuncionarioEmpresaRepository.SelectAll(filter: a => a.Data.Year == year, orderBy: a => a.OrderBy(b => b.Data), includeProperties: "funcionario,empresa");
+            try
+            {
+                var relatorio = unitOfWork.FuncionarioEmpresaRepository.SelectAll(filter: a => a.Data.Year == year, orderBy: a => a.OrderBy(b => b.Data), includeProperties: "funcionario,empresa");
 
-            if (!funcionarios.Any())
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                if (!relatorio.Any())
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
 
-            return Request.CreateResponse(HttpStatusCode.OK, funcionarios);
+                return Request.CreateResponse(HttpStatusCode.OK, relatorio);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
 
         [Route("FuncionarioEmpresa/Insert")]
@@ -87,7 +143,7 @@ namespace API.Controllers
 
                 var result = unitOfWork.FuncionarioEmpresaRepository.SelectByParam(filter: a => a.IdFuncionario == funcionarioEmpresa.IdFuncionario && a.IdEmpresa == funcionarioEmpresa.IdEmpresa && a.Data == funcionarioEmpresa.Data);
 
-                if (result == null)
+                if (result != null)
                     return Request.CreateResponse(HttpStatusCode.Conflict);
 
                 unitOfWork.FuncionarioEmpresaRepository.Insert(funcionarioEmpresa);

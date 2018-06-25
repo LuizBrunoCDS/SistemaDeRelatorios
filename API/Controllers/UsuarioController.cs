@@ -20,16 +20,23 @@ namespace API.Controllers
         [HttpPost]
         public HttpResponseMessage Logar(Usuario user)
         {
-            var senha = Encryption.GenerateMD5Hash(user.Senha);
+            try
+            {
+                var senha = Encryption.GenerateMD5Hash(user.Senha);
 
-            var usuario = unitOfWork.UsuarioRepository.SelectByParam(filter: a => a.Login == user.Login);
+                var usuario = unitOfWork.UsuarioRepository.SelectByParam(filter: a => a.Login == user.Login);
 
-            if (usuario == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound, "Usuario invalido");
-            else if (usuario.Senha != senha)
-                return Request.CreateResponse(HttpStatusCode.NotFound, "Senha inválida");
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, "Logado");
+                if (usuario == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "Usuario invalido");
+                else if (usuario.Senha != senha)
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "Senha inválida");
+                else
+                    return Request.CreateResponse(HttpStatusCode.OK, "Logado");
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
     }
 }

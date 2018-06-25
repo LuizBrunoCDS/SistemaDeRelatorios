@@ -20,11 +20,18 @@ namespace API.Controllers
         [HttpGet]
         public HttpResponseMessage Get()
         {
-            var empresas = unitOfWork.EmpresaRepository.SelectAll(orderBy: a => a.OrderBy(b => b.Nome));
+            try
+            {
+                var empresas = unitOfWork.EmpresaRepository.SelectAll(orderBy: a => a.OrderBy(b => b.Nome));
 
-            if (!empresas.Any())
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            return Request.CreateResponse(HttpStatusCode.OK, empresas);
+                if (!empresas.Any())
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                return Request.CreateResponse(HttpStatusCode.OK, empresas);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
 
         [Route("Empresa/Insert")]

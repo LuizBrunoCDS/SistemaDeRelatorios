@@ -31,15 +31,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand">JL Instalações Eletricas LTDA</a>
+                <a class="navbar-brand">JL</a>
             </div>
             <div ng-if="navBar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li id="home"><a href="#!/"><b>Home</b></a></li>
                     <li id="cadastrar"><a href="#!/Funcionarios"><b>Funcionarios</b></a></li>
-                    <li id="candidatos"><a href="#!/Empresas"><b>Empresas</b></a></li>
-                    <li id="candidatos"><a href="#!/CadastroRelatorio"><b>Inserir relatorio</b></a></li>
-                    <li id="candidatos"><a href="#!/Relatorios"><b>Relatorios</b></a></li>
+                    <li id="empresas"><a href="#!/Empresas"><b>Empresas</b></a></li>
+                    <li id="cadastrorelatorio"><a href="#!/CadastroRelatorio"><b>Inserir relatorio</b></a></li>
+                    <li id="relatorios"><a href="#!/Relatorios"><b>Relatorios</b></a></li>
                 </ul>
             </div>
         </div>
@@ -51,24 +51,22 @@
             <br />
             <div class="col-md-6 col-md-offset-3">
                 <h2>Faça o login no sistema</h2><br />
-                <form name="form" ng-submit="loginUser()" role="form">
+                <form name="form">
                     <div class="form-group" ng-class="{ 'has-error': form.usuario.$dirty && form.usuario.$error.required }">
                         <label for="usuario">Usuario</label>
                         <input type="text" name="usuario" id="usuario" class="form-control" ng-model="Usuario.Login" required />
-                        <span ng-show="form.usuario.$dirty && form.usuario.$error.required" class="help-block">Digite o usuario</span>
+                        <span ng-show="form.usuario.$dirty && form.usuario.$error.required" class="text-danger">Digite o usuario</span>
                     </div>
                     <div class="form-group" ng-class="{ 'has-error': form.senha.$dirty && form.senha.$error.required }">
                         <label for="senha">Senha</label>
                         <input type="password" name="senha" id="senha" class="form-control" ng-model="Usuario.Senha" required />
-                        <span ng-show="form.senha.$dirty && form.senha.$error.required" class="help-block">Digite a senha</span>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Login</button>
-                    </div>
+                        <span ng-show="form.senha.$dirty && form.senha.$error.required" class="text-danger">Digite a senha</span>
+                    </div>                    
+                    <input type="button" class="btn btn-primary" value="Login" ng-click="loginUser()" ng-disabled="form.$invalid" />
                 </form>
             </div>
         </div>
-        <div ng-if="logado">
+        <div ng-if="credentials">
             <div ng-view></div>
         </div>
         <hr />

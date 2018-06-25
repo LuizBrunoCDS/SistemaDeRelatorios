@@ -7,8 +7,9 @@ namespace Infra.Context
 
     public class RelatoriosContext : DbContext
     {
-        public RelatoriosContext() : base("RelatoriosContext")
+        public RelatoriosContext() : base("name=RelatoriosContext")
         {
+            Database.Connection.Open();
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
         }

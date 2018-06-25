@@ -117,6 +117,15 @@
         return response;
     }
 
+    // relatorio por data
+    this.relatorioData = function (data) {
+        var response = $http({
+            url: 'http://localhost:52141/FuncionarioEmpresa/GetByDate/' + data,
+            method: 'get'
+        });
+        return response;
+    }
+
     // relatorio por mes
     this.relatorioMes = function (mes, ano) {
         var response = $http({
@@ -160,7 +169,7 @@
     // delete relatorio
     this.deleteRelatorio = function (relatorioId) {
         var response = $http({
-            url: 'http://localhost:52141/FuncionarioEmpresa/Delete' + relatorioId,
+            url: 'http://localhost:52141/FuncionarioEmpresa/Delete/' + relatorioId,
             method: 'delete'
         });
         return response;

@@ -20,36 +20,57 @@ namespace API.Controllers
         [HttpGet]
         public HttpResponseMessage GetAll()
         {
-            var funcionarios = unitOfWork.FuncionarioRepository.SelectAll(orderBy: a => a.OrderBy(b => b.Nome));
+            try
+            {
+                var funcionarios = unitOfWork.FuncionarioRepository.SelectAll(orderBy: a => a.OrderBy(b => b.Nome));
 
-            if (!funcionarios.Any())
-                return Request.CreateResponse(HttpStatusCode.NoContent);
+                if (!funcionarios.Any())
+                    return Request.CreateResponse(HttpStatusCode.NoContent);
 
-            return Request.CreateResponse(HttpStatusCode.OK, funcionarios);
+                return Request.CreateResponse(HttpStatusCode.OK, funcionarios);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
 
         [Route("Funcionario/GetById/{id}")]
         [HttpGet]
         public HttpResponseMessage GetById(int id)
         {
-            var funcionario = unitOfWork.FuncionarioRepository.SelectByParam(filter: a => a.IdFuncionario == id);
+            try
+            {
+                var funcionario = unitOfWork.FuncionarioRepository.SelectByParam(filter: a => a.IdFuncionario == id);
 
-            if (funcionario == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                if (funcionario == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
 
-            return Request.CreateResponse(HttpStatusCode.OK, funcionario);
+                return Request.CreateResponse(HttpStatusCode.OK, funcionario);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
 
         [Route("Funcionario/GetByStatus")]
         [HttpGet]
         public HttpResponseMessage GetByStatus()
         {
-            var funcionarios = unitOfWork.FuncionarioRepository.SelectAll(filter: a => a.Status == "Ativo", orderBy: a => a.OrderBy(b => b.Nome));
+            try
+            {
+                var funcionarios = unitOfWork.FuncionarioRepository.SelectAll(filter: a => a.Status == "Ativo", orderBy: a => a.OrderBy(b => b.Nome));
 
-            if (!funcionarios.Any())
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                if (!funcionarios.Any())
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
 
-            return Request.CreateResponse(HttpStatusCode.OK, funcionarios);
+                return Request.CreateResponse(HttpStatusCode.OK, funcionarios);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
 
         [Route("Funcionario/Insert")]
