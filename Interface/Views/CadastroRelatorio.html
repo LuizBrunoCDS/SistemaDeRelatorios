@@ -21,13 +21,13 @@
             </div>
             <div class="form-group" ng-class="{ 'has-error': Cadastro.horarioinicio.$dirty && Cadastro.horarioinicio.$error.required }">
                 <label for="horarioinicio">Horario Inicio</label>
-                <input type="text" name="horarioinicio" id="horarioinicio" class="form-control" ng-model="FuncionarioEmpresa.HorarioInicio" maxlength="5" required />
-                <span class="text-danger" ng-show="Cadastro.horarioinicio.$dirty && Cadastro.horarioinicio.$error.required">Este campo é obrigatorio.</span>
+                <input type="number" name="horarioinicio" id="horarioinicio" class="form-control" ng-model="FuncionarioEmpresa.HorarioInicio" maxlength="5" required />
+                <span class="text-danger" ng-show="Cadastro.horarioinicio.$dirty && Cadastro.horarioinicio.$error.required">Digite um horario de inicio.</span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Cadastro.horariotermino.$dirty && Cadastro.horariotermino.$error.required }">
                 <label for="horariotermino">Horario Termino</label>
-                <input type="text" name="horariotermino" id="horariotermino" class="form-control" ng-model="FuncionarioEmpresa.HorarioTermino" maxlength="5" required />
-                <span class="text-danger" ng-show="Cadastro.horariotermino.$dirty && Cadastro.horariotermino.$error.required">Este campo é obrigatorio.</span>
+                <input type="number" name="horariotermino" id="horariotermino" class="form-control" ng-model="FuncionarioEmpresa.HorarioTermino" maxlength="5" required />
+                <span class="text-danger" ng-show="Cadastro.horariotermino.$dirty && Cadastro.horariotermino.$error.required">Digite um horario de término.</span>
             </div>
             <div class="form-group">
                 <label for="observacao">Observacao</label>
@@ -39,30 +39,32 @@
         <input type="button" class="btn btn-danger" value="Cancelar" ng-click="window.location.reload()" />
     </div>
 
-    <div ng-if="listaDeRelatorios" class="table-responsive">
+    <div ng-if="listaDeRelatorios">
         <br /><p><b>Lista de relatorios</b></p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <td><b>Nome</b></td>
-                    <td><b>Empresa</b></td>
-                    <td><b>Data</b></td>
-                    <td><b>Inicio</b></td>
-                    <td><b>Termino</b></td>
-                    <td><b>Opções</b></td>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td><b>Nome</b></td>
+                        <td><b>Empresa</b></td>
+                        <td><b>Data</b></td>
+                        <td><b>Inicio</b></td>
+                        <td><b>Termino</b></td>
+                        <td><b>Opções</b></td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="relatorio in lstRelatorios">
+                    <td>{{relatorio.funcionario.Nome}}</td>
+                    <td>{{relatorio.empresa.Nome}} - {{relatorio.empresa.Local}}</td>
+                    <td>{{relatorio.Data | date : 'dd/MM/yyyy'}}</td>
+                    <td>{{relatorio.HorarioInicio}}</td>
+                    <td>{{relatorio.HorarioTermino}}</td>
+                    <td>
+                        <button type="button" id="select" ng-click="visualizarRelatorio(relatorio, 'update')" class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
+                        <button type="button" id="select" ng-click="removerRelatorio(relatorio)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                    </td>
                 </tr>
-            </thead>
-            <tr ng-repeat="relatorio in lstRelatorios">
-                <td>{{relatorio.funcionario.Nome}}</td>
-                <td>{{relatorio.empresa.Nome}} - {{relatorio.empresa.Local}}</td>
-                <td>{{relatorio.Data | date : 'dd/MM/yyyy'}}</td>
-                <td>{{relatorio.HorarioInicio}}</td>
-                <td>{{relatorio.HorarioTermino}}</td>
-                <td>
-                    <button type="button" id="select" ng-click="visualizarRelatorio(relatorio, 'update')" class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
-                    <button type="button" id="select" ng-click="removerRelatorio(relatorio)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                </td>
-            </tr>
-        </table>
+            </table>
+        </div>
     </div>
 </div>

@@ -5,17 +5,17 @@
             <div class="form-group" ng-class="{ 'has-error': Cadastro.nome.$dirty && Cadastro.nome.$error.required }">
                 <label for="nome">Nome</label>
                 <input type="text" name="nome" id="nome" class="form-control" ng-model="Funcionario.Nome" maxlength="100" required />
-                <span class="text-danger" ng-show="Cadastro.nome.$dirty && Cadastro.nome.$error.required">Este campo é obrigatorio.</span>
+                <span class="text-danger" ng-show="Cadastro.nome.$dirty && Cadastro.nome.$error.required">Digite um nome para o funcionário.</span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Cadastro.cpf.$dirty && Cadastro.cpf.$error.required }">
                 <label for="cpf">CPF</label>
                 <input type="text" name="cpf" id="cpf" class="form-control" ng-model="Funcionario.CPF" maxlength="11" required />
-                <span class="text-danger" ng-show="Cadastro.cpf.$dirty && Cadastro.cpf.$error.required">Este campo é obrigatorio.</span>
+                <span class="text-danger" ng-show="Cadastro.cpf.$dirty && Cadastro.cpf.$error.required">Digite um CPF válido.</span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Cadastro.rg.$dirty && Cadastro.rg.$error.required }">
                 <label for="rg">RG</label>
                 <input type="text" name="rg" id="rg" class="form-control" ng-model="Funcionario.RG" maxlength="10" required />
-                <span class="text-danger" ng-show="Cadastro.rg.$dirty && Cadastro.rg.$error.required">Este campo é obrigatorio.</span>
+                <span class="text-danger" ng-show="Cadastro.rg.$dirty && Cadastro.rg.$error.required">Digite um RG válido.</span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Cadastro.telefone.$dirty && Cadastro.telefone.$error.required }">
                 <label for="telefone">Telefone</label>
@@ -24,7 +24,7 @@
             <div class="form-group" ng-class="{ 'has-error': Cadastro.cargo.$dirty && Cadastro.cargo.$error.required }">
                 <label for="cargo">Cargo</label>
                 <input type="text" name="cargo" id="cargo" class="form-control" ng-model="Funcionario.Cargo" maxlength="50" required />
-                <span class="text-danger" ng-show="Cadastro.cargo.$dirty && Cadastro.cargo.$error.required">Este campo é obrigatorio.</span>
+                <span class="text-danger" ng-show="Cadastro.cargo.$dirty && Cadastro.cargo.$error.required">Digite um cargo para o funcionário.</span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Cadastro.status.$dirty && Cadastro.status.$error.required }">
                 <label for="status">Status</label>
@@ -40,25 +40,27 @@
         <input type="button" class="btn btn-danger" value="Cancelar" ng-click="window.location.reload()" />
     </div>
 
-    <div ng-if="listaDeFuncionarios" class="table-responsive">
+    <div ng-if="listaDeFuncionarios">
         <br /><p><b>Lista de funcionarios</b></p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <td><b>Nome</b></td>
-                    <td><b>Telefone</b></td>
-                    <td><b>Cargo</b></td>
-                    <td><b>Status</b></td>
-                    <td><b>Visualizar</b></td>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td><b>Nome</b></td>
+                        <td><b>Telefone</b></td>
+                        <td><b>Cargo</b></td>
+                        <td><b>Status</b></td>
+                        <td><b>Visualizar</b></td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="func in lstFuncionarios">
+                    <td>{{func.Nome}}</td>
+                    <td>{{func.Telefone}}</td>
+                    <td>{{func.Cargo}}</td>
+                    <td ng-class="{'color-red': func.Status === 'Inativo', 'color-green': func.Status === 'Ativo'}">{{func.Status}}</td>
+                    <td><button type="button" id="select" ng-click="visualizarFuncionario($index, 'update')" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button></td>
                 </tr>
-            </thead>
-            <tr ng-repeat="func in lstFuncionarios">
-                <td>{{func.Nome}}</td>
-                <td>{{func.Telefone}}</td>
-                <td>{{func.Cargo}}</td>
-                <td ng-class="{'color-red': func.Status === 'Inativo', 'color-green': func.Status === 'Ativo'}">{{func.Status}}</td>
-                <td><button type="button" id="select" ng-click="visualizarFuncionario($index, 'update')" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button></td>
-            </tr>
-        </table>
+            </table>
+        </div>
     </div>
 </div>

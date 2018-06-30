@@ -118,9 +118,9 @@
     }
 
     // relatorio por data
-    this.relatorioData = function (data) {
+    this.relatorioData = function (day, month, year) {
         var response = $http({
-            url: 'http://localhost:52141/FuncionarioEmpresa/GetByDate/' + data,
+            url: 'http://localhost:52141/FuncionarioEmpresa/GetByDate/' + day + '/' + month + '/' + year,
             method: 'get'
         });
         return response;

@@ -7,7 +7,7 @@
             <select required name="funcionario" ng-model="Parametro.IdFuncionario" class="form-control">
                 <option ng-repeat="func in lstFuncionarios" value="{{func.IdFuncionario}}">{{func.Nome}}</option>
             </select>
-            <span class="text-danger" ng-show="RelatorioFunc.funcionario.$dirty && RelatorioFunc.funcionario.$error.required">Selecione um funcionario.</span>
+            <span class="text-danger" ng-show="RelatorioFunc.funcionario.$dirty && RelatorioFunc.funcionario.$error.required">Selecione um funcionário.</span>
         </div>
         <input type="button" class="btn btn-default" value="Buscar" ng-click="relatorioPorFuncionario()" ng-disabled="RelatorioFunc.$invalid" />
     </form>
@@ -69,26 +69,27 @@
         <input type="button" class="btn btn-default" value="Buscar" ng-click="relatorioPorAno()" ng-disabled="RelatorioAno.$invalid" />
     </form>
 
-    <br />
-    <div ng-if="listaDeRelatorios" class="table-responsive">
+    <div ng-if="listaDeRelatorios">
         <br /><p><b>Lista de relatorios</b></p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <td><b>Nome</b></td>
-                    <td><b>Empresa</b></td>
-                    <td><b>Data</b></td>
-                    <td><b>Inicio</b></td>
-                    <td><b>Termino</b></td>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td><b>Nome</b></td>
+                        <td><b>Empresa</b></td>
+                        <td><b>Data</b></td>
+                        <td><b>Inicio</b></td>
+                        <td><b>Termino</b></td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="relatorio in lstRelatorios">
+                    <td>{{relatorio.funcionario.Nome}}</td>
+                    <td>{{relatorio.empresa.Nome}} - {{relatorio.empresa.Local}}</td>
+                    <td>{{relatorio.Data | date : 'dd/MM/yyyy'}}</td>
+                    <td>{{relatorio.HorarioInicio}}</td>
+                    <td>{{relatorio.HorarioTermino}}</td>
                 </tr>
-            </thead>
-            <tr ng-repeat="relatorio in lstRelatorios">
-                <td>{{relatorio.funcionario.Nome}}</td>
-                <td>{{relatorio.empresa.Nome}}</td>
-                <td>{{relatorio.Data | date : 'dd/MM/yyyy'}}</td>
-                <td>{{relatorio.HorarioInicio}}</td>
-                <td>{{relatorio.HorarioTermino}}</td>
-            </tr>
-        </table>
+            </table>
+        </div>
     </div>
 </div>

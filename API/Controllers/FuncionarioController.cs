@@ -25,13 +25,13 @@ namespace API.Controllers
                 var funcionarios = unitOfWork.FuncionarioRepository.SelectAll(orderBy: a => a.OrderBy(b => b.Nome));
 
                 if (!funcionarios.Any())
-                    return Request.CreateResponse(HttpStatusCode.NoContent);
+                    return Request.CreateResponse(HttpStatusCode.NoContent, "Não foi encontrado nenhum funcionario registrado");
 
                 return Request.CreateResponse(HttpStatusCode.OK, funcionarios);
             }
             catch
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Erro no Serverside ao realizar esta ação");
             }
         }
 
@@ -44,13 +44,13 @@ namespace API.Controllers
                 var funcionario = unitOfWork.FuncionarioRepository.SelectByParam(filter: a => a.IdFuncionario == id);
 
                 if (funcionario == null)
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "Não foi encontrado nenhum funcionario com este parametro");
 
                 return Request.CreateResponse(HttpStatusCode.OK, funcionario);
             }
             catch
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Erro no Serverside ao realizar esta ação");
             }
         }
 
@@ -63,13 +63,13 @@ namespace API.Controllers
                 var funcionarios = unitOfWork.FuncionarioRepository.SelectAll(filter: a => a.Status == "Ativo", orderBy: a => a.OrderBy(b => b.Nome));
 
                 if (!funcionarios.Any())
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "Não foi encontrado nenhum funcionario ativo");
 
                 return Request.CreateResponse(HttpStatusCode.OK, funcionarios);
             }
             catch
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Erro no Serverside ao realizar esta ação");
             }
         }
 
@@ -80,20 +80,20 @@ namespace API.Controllers
             try
             {
                 if (funcionario == null)
-                    return Request.CreateResponse(HttpStatusCode.NoContent);
+                    return Request.CreateResponse(HttpStatusCode.NoContent, "Os dados para registrar o funcionario estão incompletos");
 
                 var result = unitOfWork.FuncionarioRepository.SelectByParam(filter: a => a.CPF == funcionario.CPF);
 
                 if (result != null)
-                    return Request.CreateResponse(HttpStatusCode.Conflict);
+                    return Request.CreateResponse(HttpStatusCode.Conflict, "Já existe um funcionario registrado com o CPF passado");
 
                 unitOfWork.FuncionarioRepository.Insert(funcionario);
                 unitOfWork.Commit();
-                return Request.CreateResponse(HttpStatusCode.OK, "Inserido");
+                return Request.CreateResponse(HttpStatusCode.OK, "Dados do funcionario inseridos com sucesso");
             }
             catch
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Erro no Serverside ao realizar esta ação");
             }
         }
 
@@ -104,20 +104,20 @@ namespace API.Controllers
             try
             {
                 if (funcionario == null)
-                    return Request.CreateResponse(HttpStatusCode.NoContent);
+                    return Request.CreateResponse(HttpStatusCode.NoContent, "Os dados para registrar o funcionario estão incompletos");
 
                 var entity = unitOfWork.FuncionarioRepository.SelectByParam(filter: a => a.IdFuncionario == funcionario.IdFuncionario);
 
                 if (entity == null)
-                    return Request.CreateResponse(HttpStatusCode.NoContent);
+                    return Request.CreateResponse(HttpStatusCode.NoContent, "Não existe dados registrados para este funcionario");
 
                 unitOfWork.FuncionarioRepository.Update(entity, funcionario);
                 unitOfWork.Commit();
-                return Request.CreateResponse(HttpStatusCode.OK, "Alterado");
+                return Request.CreateResponse(HttpStatusCode.OK, "Dados do funcionario alterados com sucesso");
             }
             catch
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Erro no Serverside ao realizar esta ação");
             }
         }
     }

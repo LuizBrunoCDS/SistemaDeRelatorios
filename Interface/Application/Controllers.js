@@ -48,10 +48,10 @@ app.controller('EmpresasCtrl', function ($scope, SistemaDeRelatorios) {
                 var result = SistemaDeRelatorios.adicionarEmpresa($scope.Empresa);
             }
             result.then(function (msg) {
-                alert('Dados da empresa alterados/inserido');
+                alert(msg.data);
                 window.location.reload();
-            }, function () {
-                alert('Erro ao tentar atualizar/adicionar os registros da empresa');
+            }, function (msg) {
+                alert('Erro: ' + msg.data);
             });
         }
     }
@@ -89,10 +89,10 @@ app.controller('FuncionariosCtrl', function ($scope, SistemaDeRelatorios) {
                 var result = SistemaDeRelatorios.adicionarFuncionario($scope.Funcionario);
             }
             result.then(function (msg) {
-                alert('Dados do funcionario alterados/inserido');
+                alert(msg.data);
                 window.location.reload();
-            }, function () {
-                alert('Erro ao tentar atualizar/adicionar os registros do funcionario');
+            }, function (msg) {
+                alert('Erro: ' + msg.data);
             });
         }
     }
@@ -123,9 +123,9 @@ app.controller('RelatoriosCtrl', function ($scope, SistemaDeRelatorios) {
         result.then(function (lista) {
             $scope.lstRelatorios = lista.data;
             $scope.listaDeRelatorios = true;
-        }, function () {
+        }, function (msg) {
             $scope.listaDeRelatorios = false;
-            alert('Não foi encontrado nenhum registro com o parametro passado.');
+            alert('Erro: ' + msg.data);
         });
     }
 
@@ -135,21 +135,24 @@ app.controller('RelatoriosCtrl', function ($scope, SistemaDeRelatorios) {
         result.then(function (lista) {
             $scope.lstRelatorios = lista.data;
             $scope.listaDeRelatorios = true;
-        }, function () {
+        }, function (msg) {
             $scope.listaDeRelatorios = false;
-            alert('Não foi encontrado nenhum registro com o parametro passado.');
+            alert('Erro: ' + msg.data);
         });
     }
 
     // relatorio por data
     $scope.relatorioPorData = function () {
-        var result = SistemaDeRelatorios.relatorioData($scope.Parametro.Data);
+        var day = ($scope.Parametro.Data).getUTCDate();
+        var month = ($scope.Parametro.Data).getUTCMonth() + 1;
+        var year = ($scope.Parametro.Data).getFullYear();
+        var result = SistemaDeRelatorios.relatorioData(day, month, year);
         result.then(function (lista) {
             $scope.lstRelatorios = lista.data;
             $scope.listaDeRelatorios = true;
-        }, function () {
+        }, function (msg) {
             $scope.listaDeRelatorios = false;
-            alert('Não foi encontrado nenhum registro com o parametro passado.');
+            alert('Erro: ' + msg.data);
         });
     }
 
@@ -159,9 +162,9 @@ app.controller('RelatoriosCtrl', function ($scope, SistemaDeRelatorios) {
         result.then(function (lista) {
             $scope.lstRelatorios = lista.data;
             $scope.listaDeRelatorios = true;
-        }, function () {
+        }, function (msg) {
             $scope.listaDeRelatorios = false;
-            alert('Não foi encontrado nenhum registro com os parametros passados.');
+            alert('Erro: ' + msg.data);
         });
     }
 
@@ -171,9 +174,9 @@ app.controller('RelatoriosCtrl', function ($scope, SistemaDeRelatorios) {
         result.then(function (lista) {
             $scope.lstRelatorios = lista.data;
             $scope.listaDeRelatorios = true;
-        }, function () {
+        }, function (msg) {
             $scope.listaDeRelatorios = false;
-            alert('Não foi encontrado nenhum registro com o parametro passado.');
+            alert('Erro: ' + msg.data);
         });
     }
 
@@ -181,6 +184,8 @@ app.controller('RelatoriosCtrl', function ($scope, SistemaDeRelatorios) {
         var result = SistemaDeRelatorios.getEmpresas();
         result.then(function (empresas) {
             $scope.lstEmpresas = empresas.data;
+        }, function (msg) {
+            alert('Erro: ' + msg.data);
         });
     }
 
@@ -188,6 +193,8 @@ app.controller('RelatoriosCtrl', function ($scope, SistemaDeRelatorios) {
         var result = SistemaDeRelatorios.getFuncionarios();
         result.then(function (funcionarios) {
             $scope.lstFuncionarios = funcionarios.data;
+        }, function (msg) {
+            alert('Erro: ' + msg.data);
         });
     }
 });
@@ -212,14 +219,14 @@ app.controller('CadastroRelatorioCtrl', function ($scope, SistemaDeRelatorios) {
         if (res == true) {
             if ($scope.Flag === 'update') {
                 var result = SistemaDeRelatorios.atualizarRelatorio($scope.FuncionarioEmpresa);
-            } else {
+            } else {                
                 var result = SistemaDeRelatorios.adicionarRelatorio($scope.FuncionarioEmpresa);
             }
             result.then(function (msg) {
-                alert('Dados do funcionario alterados/inserido');
+                alert(msg.data);
                 window.location.reload();
-            }, function () {
-                alert('Erro ao tentar atualizar/adicionar os registros do funcionario');
+            }, function (msg) {
+                alert('Erro: ' + msg.data);
             });
         }
     }
@@ -230,10 +237,10 @@ app.controller('CadastroRelatorioCtrl', function ($scope, SistemaDeRelatorios) {
         if (res == true) {
             var result = SistemaDeRelatorios.deleteRelatorio(relatorio.IdFuncionarioEmpresa);
             result.then(function (msg) {
-                alert('Relatorio removido');
+                alert(msg.data);
                 window.location.reload();
-            }, function () {
-                alert('Erro ao tentar apagar o relatorio');
+            }, function (msg) {
+                alert('Erro: ' + msg.data);
             });
         }
     }
@@ -244,8 +251,9 @@ app.controller('CadastroRelatorioCtrl', function ($scope, SistemaDeRelatorios) {
         result.then(function (relatorios) {
             $scope.lstRelatorios = relatorios.data;
             $scope.listaDeRelatorios = true;
-        }, function () {
+        }, function (msg) {
             $scope.listaDeRelatorios = false;
+            alert('Erro: ' + msg.data)
         });
     }
 
@@ -254,6 +262,8 @@ app.controller('CadastroRelatorioCtrl', function ($scope, SistemaDeRelatorios) {
         var result = SistemaDeRelatorios.getEmpresas();
         result.then(function (empresas) {
             $scope.lstEmpresas = empresas.data;
+        }, function (msg) {
+            alert('Erro: ' + msg.data)
         });
     }
 
@@ -262,6 +272,8 @@ app.controller('CadastroRelatorioCtrl', function ($scope, SistemaDeRelatorios) {
         var result = SistemaDeRelatorios.getFuncionarios();
         result.then(function (funcionarios) {
             $scope.lstFuncionarios = funcionarios.data;
+        }, function (msg) {
+            alert('Erro: ' + msg.data)
         });
     }
 });

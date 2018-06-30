@@ -25,12 +25,12 @@ namespace API.Controllers
                 var empresas = unitOfWork.EmpresaRepository.SelectAll(orderBy: a => a.OrderBy(b => b.Nome));
 
                 if (!empresas.Any())
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "Não foi encontrado nenhuma empresa registrada");
                 return Request.CreateResponse(HttpStatusCode.OK, empresas);
             }
             catch
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Erro no Serverside ao realizar esta ação");
             }
         }
 
@@ -41,20 +41,20 @@ namespace API.Controllers
             try
             {
                 if (empresa == null)
-                    return Request.CreateResponse(HttpStatusCode.NoContent);
+                    return Request.CreateResponse(HttpStatusCode.NoContent, "Os dados para registrar o funcionario estão incompletos");
 
                 var result = unitOfWork.EmpresaRepository.SelectByParam(filter: a => a.Nome == empresa.Nome && a.Local == empresa.Local);
 
                 if (result != null)
-                    return Request.CreateResponse(HttpStatusCode.Conflict);
+                    return Request.CreateResponse(HttpStatusCode.Conflict, "Já existe um funcionario registrado com o CPF passado");
 
                 unitOfWork.EmpresaRepository.Insert(empresa);
                 unitOfWork.Commit();
-                return Request.CreateResponse(HttpStatusCode.OK, "Inserido");
+                return Request.CreateResponse(HttpStatusCode.OK, "Dados do funcionario inseridos com sucesso");
             }
             catch
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Erro no Serverside ao realizar esta ação");
             }
         }
 
@@ -65,20 +65,20 @@ namespace API.Controllers
             try
             {
                 if (empresa == null)
-                    return Request.CreateResponse(HttpStatusCode.NoContent);
+                    return Request.CreateResponse(HttpStatusCode.NoContent, "Os dados para registrar o funcionario estão incompletos");
 
                 var entity = unitOfWork.EmpresaRepository.SelectByParam(filter: a => a.IdEmpresa == empresa.IdEmpresa);
 
                 if (entity == null)
-                    return Request.CreateResponse(HttpStatusCode.NoContent);
+                    return Request.CreateResponse(HttpStatusCode.NoContent, "Não existe dados registrados para este funcionario");
 
                 unitOfWork.EmpresaRepository.Update(entity, empresa);
                 unitOfWork.Commit();
-                return Request.CreateResponse(HttpStatusCode.OK, "Alterado");
+                return Request.CreateResponse(HttpStatusCode.OK, "Dados do funcionario alterados com sucesso");
             }
             catch
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Erro no Serverside ao realizar esta ação");
             }
         }
     }

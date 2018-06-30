@@ -27,15 +27,15 @@ namespace API.Controllers
                 var usuario = unitOfWork.UsuarioRepository.SelectByParam(filter: a => a.Login == user.Login);
 
                 if (usuario == null)
-                    return Request.CreateResponse(HttpStatusCode.NotFound, "Usuario invalido");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "Usuario inválido");
                 else if (usuario.Senha != senha)
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Senha inválida");
                 else
-                    return Request.CreateResponse(HttpStatusCode.OK, "Logado");
+                    return Request.CreateResponse(HttpStatusCode.OK, "Logado com sucesso");
             }
             catch
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Erro no Serverside ao realizar esta ação");
             }
         }
     }
